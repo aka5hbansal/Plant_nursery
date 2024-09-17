@@ -1,19 +1,19 @@
 package com.example.plantnursery.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-
 @Entity
-public class OrderItem {
+public class CartItem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderItemId;
+    private Long cartItemId;
 
     @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "order_id", nullable = false)
-    private Orders orders;
+    @JoinColumn(name = "cart_id", nullable = false)
+    @JsonBackReference
+    private Cart cart;
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
@@ -21,20 +21,21 @@ public class OrderItem {
 
     private int quantity;
 
-    public Long getOrderItemId() {
-        return orderItemId;
+    // Getters and setters
+    public Long getCartItemId() {
+        return cartItemId;
     }
 
-    public void setOrderItemId(Long orderItemId) {
-        this.orderItemId = orderItemId;
+    public void setCartItemId(Long cartItemId) {
+        this.cartItemId = cartItemId;
     }
 
-    public Orders getOrders() {
-        return orders;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setOrders(Orders orders) {
-        this.orders = orders;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public Item getItem() {
@@ -52,6 +53,5 @@ public class OrderItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
-
 }
+
