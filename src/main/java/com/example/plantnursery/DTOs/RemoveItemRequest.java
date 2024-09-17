@@ -5,7 +5,7 @@ public class RemoveItemRequest {
     private Long customerId;
     private Long itemId;
 
-    // Getters and setters
+
     public Long getCustomerId() {
         return customerId;
     }

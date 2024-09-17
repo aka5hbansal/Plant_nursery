@@ -6,7 +6,6 @@ public class ItemRequest {
     private Long itemId;
     private int quantity;
 
-    // Getters and setters
     public Long getCustomerId() {
         return customerId;
     }

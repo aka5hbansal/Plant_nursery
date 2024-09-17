@@ -19,11 +19,9 @@ public class Cart {
     @JsonIgnore
     private Customer customer;
 
-    // Cart manages items before checkout
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> items = new ArrayList<>();
 
-    // Getters and setters
     public Long getCartId() {
         return cartId;
     }

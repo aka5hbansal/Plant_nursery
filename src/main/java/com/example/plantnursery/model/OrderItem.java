@@ -4,37 +4,39 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
-public class CartItem {
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cartItemId;
+    private Long orderItemId;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id", nullable = false)
+    @JoinColumn(name = "order_id", nullable = false)
     @JsonBackReference
-    private Cart cart;
+    private Orders order;
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
     private int quantity;
+    private double price;
 
-    public Long getCartItemId() {
-        return cartItemId;
+
+    public Long getOrderItemId() {
+        return orderItemId;
     }
 
-    public void setCartItemId(Long cartItemId) {
-        this.cartItemId = cartItemId;
+    public void setOrderItemId(Long orderItemId) {
+        this.orderItemId = orderItemId;
     }
 
-    public Cart getCart() {
-        return cart;
+    public Orders getOrder() {
+        return order;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setOrder(Orders order) {
+        this.order = order;
     }
 
     public Item getItem() {
@@ -52,5 +54,12 @@ public class CartItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-}
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+}

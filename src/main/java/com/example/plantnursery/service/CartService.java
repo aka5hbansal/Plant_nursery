@@ -1,11 +1,10 @@
 package com.example.plantnursery.service;
 
-import com.example.plantnursery.model.Cart;
-import com.example.plantnursery.model.CartItem;
-import com.example.plantnursery.model.Item;
-import com.example.plantnursery.model.Customer;
+import com.example.plantnursery.model.*;
 import com.example.plantnursery.repository.CartRepository;
 import com.example.plantnursery.repository.CartItemRepository;
+import com.example.plantnursery.repository.OrderRepository;
+import com.example.plantnursery.repository.OrderItemRepository;
 import com.example.plantnursery.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,4 +88,5 @@ public class CartService {
         cart.getItems().clear();
         return cartRepository.save(cart);
     }
+
 }
