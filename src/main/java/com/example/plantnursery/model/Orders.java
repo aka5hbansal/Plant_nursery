@@ -22,6 +22,16 @@ public class Orders {
 
     private double totalAmount;
 
+    @Enumerated(EnumType.STRING)
+    private DeliveryMethod deliveryMethod;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "addressId")
+    private Address address;
+
+
+    private Long storeId;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<OrderItem> items = new ArrayList<>();
@@ -65,4 +75,34 @@ public class Orders {
     public void setItems(List<OrderItem> items) {
         this.items = items;
     }
+
+    public DeliveryMethod getDeliveryMethod() {
+        return deliveryMethod;
+    }
+
+    public void setDeliveryMethod(DeliveryMethod deliveryMethod) {
+        this.deliveryMethod = deliveryMethod;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Long getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Long storeId) {
+        this.storeId = storeId;
+    }
+
+    public enum DeliveryMethod {
+        SHIPPING,
+        PICKUP
+    }
+
 }

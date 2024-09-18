@@ -1,5 +1,6 @@
 package com.example.plantnursery.service;
 
+import com.example.plantnursery.DTOs.DeliveryRequest;
 import com.example.plantnursery.model.*;
 import com.example.plantnursery.repository.CartRepository;
 import com.example.plantnursery.repository.CartItemRepository;
@@ -66,5 +67,25 @@ public class OrderService {
     }
     public Orders getOrderById(Long orderId) {
         return orderRepository.findById(orderId).orElse(null);
+    }
+
+    public void updateDeliveryDetails(Long orderId, DeliveryRequest deliveryRequest) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        if (deliveryRequest.getDeliveryMethod() == Orders.DeliveryMethod.SHIPPING) {
+            order.setAddress(deliveryRequest.getAddress());
+            order.setStoreId(null);  // Make sure storeId is null
+        } else if (deliveryRequest.getDeliveryMethod() == Orders.DeliveryMethod.PICKUP) {
+            order.setStoreId(deliveryRequest.getStoreId());
+            order.setAddress(null);  // Make sure address is null
+        }
+        order.setDeliveryMethod(deliveryRequest.getDeliveryMethod());
+
+        orderRepository.save(order);
+    }
+
+    public List<Orders> getAllOrders() {
+        return orderRepository.findAll();
     }
 }

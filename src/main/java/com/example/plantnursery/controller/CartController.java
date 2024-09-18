@@ -34,10 +34,11 @@ public class CartController {
         return cartService.addItemToCart(request.getCustomerId(), request.getItemId(), request.getQuantity());
     }
 
-    @DeleteMapping("/remove")
-    public Cart removeItemFromCart(@RequestBody RemoveItemRequest request) {
-        return cartService.removeItemFromCart(request.getCustomerId(), request.getItemId());
+    @DeleteMapping("/remove/{customerId}/{itemId}")
+    public Cart removeItemFromCart(@PathVariable Long customerId, @PathVariable Long itemId) {
+        return cartService.removeItemFromCart(customerId, itemId);
     }
+
 
     @PutMapping("/reduce")
     public Cart reduceItemQuantity(@RequestBody ItemRequest request) {
