@@ -21,6 +21,7 @@ public class Customer {
 
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "customer_id")
+    @JsonIgnore
     private List<Address> addresses;
 
     public Long getCustomerId() {

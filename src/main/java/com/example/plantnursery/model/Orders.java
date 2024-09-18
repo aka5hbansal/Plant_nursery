@@ -32,6 +32,10 @@ public class Orders {
 
     private Long storeId;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Payment.PaymentStatus paymentStatus = Payment.PaymentStatus.PENDING;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<OrderItem> items = new ArrayList<>();
@@ -98,6 +102,14 @@ public class Orders {
 
     public void setStoreId(Long storeId) {
         this.storeId = storeId;
+    }
+
+    public Payment.PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(Payment.PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
     public enum DeliveryMethod {

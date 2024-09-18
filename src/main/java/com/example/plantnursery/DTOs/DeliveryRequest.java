@@ -7,7 +7,10 @@ public class DeliveryRequest {
 
     private Orders.DeliveryMethod deliveryMethod;
     private Long storeId;  // For pickup
-    private Address address;  // For shipping
+    private Address address;  // For shipping (manual input)
+    private Long addressId;  // For Shipping (selecting a saved address)
+
+
 
     public Orders.DeliveryMethod getDeliveryMethod() {
         return deliveryMethod;
@@ -32,5 +35,12 @@ public class DeliveryRequest {
     public void setAddress(Address address) {
         this.address = address;
     }
-}
 
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
+    }
+}

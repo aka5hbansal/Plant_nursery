@@ -1,5 +1,6 @@
 package com.example.plantnursery.controller;
 
+import com.example.plantnursery.model.Address;
 import com.example.plantnursery.model.Customer;
 import com.example.plantnursery.model.User;
 import com.example.plantnursery.repository.CustomerRepository;
@@ -7,6 +8,7 @@ import com.example.plantnursery.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +41,14 @@ public class CustomerController {
 
         customerRepository.save(customerDetails);
         return ResponseEntity.ok("Customer details added successfully");
+    }
+
+    @GetMapping("/{customerId}/addresses")
+    public ResponseEntity<List<Address>> getCustomerAddresses(@PathVariable Long customerId) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
+
+        return ResponseEntity.ok(customer.getAddresses());
     }
 }
 
