@@ -1,0 +1,585 @@
+openapi: 3.0.1
+info:
+  title: Plant Nursery Management API
+  description: API specification for managing plant nursery operations.
+  version: v0
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/cart/reduce:
+    put:
+      tags:
+        - cart-controller
+      operationId: reduceItemQuantity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Cart"
+  
+  /api/cart/increase:
+    put:
+      tags:
+        - cart-controller
+      operationId: increaseItemQuantity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Cart"
+  
+  /api/users/register:
+    post:
+      tags:
+        - user-controller
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreate"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  
+  /api/items:
+    get:
+      tags:
+        - item-controller
+      operationId: getAllItems
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+    post:
+      tags:
+        - item-controller
+      operationId: createItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemCreateRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Item"
+  
+  /api/inquiries:
+    get:
+      tags:
+        - inquiry-controller
+      operationId: getAllInquiries
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Inquiry"
+    post:
+      tags:
+        - inquiry-controller
+      operationId: createInquiry
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InquiryRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Inquiry"
+  
+  
+  
+  /api/cart/checkout/{customerId}:
+    post:
+      tags:
+        - cart-controller
+      operationId: checkout
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Orders"
+  
+  /api/cart/add:
+    post:
+      tags:
+        - cart-controller
+      operationId: addItemToCart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Cart"
+  
+  /api/orders/{orderId}:
+    get:
+      tags:
+        - order-controller
+      operationId: getOrderById
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Orders"
+  
+  /api/inquiries/{inquiryId}:
+    get:
+      tags:
+        - inquiry-controller
+      operationId: getInquiryById
+      parameters:
+        - name: inquiryId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Inquiry"
+  
+  /api/customers:
+    get:
+      tags:
+        - customer-controller
+      operationId: getAllCustomers
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Customer"
+                  
+  /api/customers/{userId}:
+    post:
+      tags:
+        - customer-controller
+      operationId: addCustomerDetails
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerCreate"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: string
+  
+  /api/cart/{customerId}:
+    get:
+      tags:
+        - cart-controller
+      operationId: getCart
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Cart"
+  
+  /api/address:
+    get:
+      tags:
+        - address-controller
+      operationId: getAllAddresses
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Address"
+  
+  /api/cart/remove/{customerId}/{itemId}:
+   delete:
+    tags:
+      - cart-controller
+    operationId: removeItemFromCart
+    parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: itemId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+    responses:
+      '200':
+        description: OK
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Cart"
+
+  /api/cart/clear/{customerId}:
+    delete:
+      tags:
+        - cart-controller
+      operationId: clearCart
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Cart"
+components:
+  schemas:
+    ItemRequest:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          format: int64
+        itemId:
+          type: integer
+          format: int64
+        quantity:
+          type: integer
+          format: int32
+    
+    Cart:
+      type: object
+      properties:
+        cartId:
+          type: integer
+          format: int64
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartItem"
+    
+    CartItem:
+      type: object
+      properties:
+        cartItemId:
+          type: integer
+          format: int64
+        cart:
+          $ref: "#/components/schemas/Cart"
+        item:
+          $ref: "#/components/schemas/Item"
+        quantity:
+          type: integer
+          format: int32
+    
+    Item:
+      type: object
+      properties:
+        itemId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: float
+        stockQuantity:
+          type: integer
+          format: int32
+        itemCategory:
+          type: string
+          enum:
+            - PLANT
+            - SEED
+            - TOOL
+            - POT
+            - FERTILIZER
+    
+    ItemCreateRequest:  # For POST request, excluding the ID
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        stockQuantity:
+          type: integer
+        itemCategory:
+          type: string
+          enum:
+            - PLANT
+            - SEED
+            - TOOL
+            - POT
+            - FERTILIZER
+      required:
+        - name
+        - price
+        - stockQuantity
+        - itemCategory
+    
+    User:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        username:
+          type: string
+        password:
+          type: string
+          
+    UserCreate:      # For POST request, excluding the ID
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    
+    InquiryRequest:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          format: int64
+        subject:
+          type: string
+        message:
+          type: string
+    
+    Inquiry:
+      type: object
+      properties:
+        inquiryId:
+          type: integer
+          format: int64
+        customerId:
+          type: integer
+          format: int64
+        subject:
+          type: string
+        message:
+          type: string
+        inquiryDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - OPEN
+            - IN_PROGRESS
+            - CLOSED
+        response:
+          type: string
+    
+    Address:
+      type: object
+      properties:
+        addressId:
+          type: integer
+          format: int64
+        line1:
+          type: string
+        line2:
+          type: string
+        area:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        pin:
+          type: string
+    
+    RemoveItemRequest:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          format: int64
+        itemId:
+          type: integer
+          format: int64
+    
+    Orders:
+      type: object
+      properties:
+        orderId:
+          type: integer
+          format: int64
+        orderDate:
+          type: string
+          format: date-time
+        customer:
+          $ref: "#/components/schemas/Customer"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+        totalAmount:
+          type: number
+          format: float
+        deliveryMethod:
+          type: string
+          enum:
+            - SHIPPING
+            - PICKUP
+    
+    OrderItem:
+      type: object
+      properties:
+        orderItemId:
+          type: integer
+          format: int64
+        order:
+          $ref: "#/components/schemas/Orders"
+        item:
+          $ref: "#/components/schemas/Item"
+        quantity:
+          type: integer
+          format: int32
+    
+    Customer:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        addresses:
+          type: array
+          items:
+            $ref: "#/components/schemas/Address"
+            
+    CustomerCreate:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        addresses:
+          type: array
+          items:
+            $ref: "#/components/schemas/Address"
+
+            
