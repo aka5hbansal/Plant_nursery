@@ -10,31 +10,31 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/stores")
+@RequestMapping
 public class StoreController {
 
     @Autowired
     private StoreService storeService;
 
-    @GetMapping
+    @GetMapping("/api/stores")
     public List<Store> getAllStores() {
         return storeService.getAllStores();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/stores/{id}")
     public ResponseEntity<Store> getStoreById(@PathVariable Long id) {
         Optional<Store> store = storeService.getStoreById(id);
         return store.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/api/staff/stores/add-store")
     public ResponseEntity<Store> createStore(@RequestBody Store store) {
         Store newStore = storeService.addStore(store);
         return ResponseEntity.ok(newStore);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/api/staff/stores/update-store/{id}")
     public ResponseEntity<Store> updateStore(
             @PathVariable Long id,
             @RequestBody Store storeDetails) {
@@ -42,7 +42,7 @@ public class StoreController {
         return ResponseEntity.ok(updatedStore);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/staff/stores/delete-store/{id}")
     public ResponseEntity<Void> deleteStore(@PathVariable Long id) {
         storeService.deleteStore(id);
         return ResponseEntity.noContent().build();

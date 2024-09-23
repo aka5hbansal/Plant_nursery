@@ -24,6 +24,10 @@ public class InquiryService {
         return inquiryRepository.findAll();
     }
 
+    public List<Inquiry> getInquiriesByCustomerId(Long customerId) {
+        return inquiryRepository.findByCustomerId(customerId);
+    }
+
     public Inquiry createInquiry(InquiryRequest request) {
         Inquiry inquiry = new Inquiry();
         inquiry.setCustomerId(request.getCustomerId());

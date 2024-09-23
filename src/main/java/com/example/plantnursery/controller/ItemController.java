@@ -11,19 +11,19 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/items")
+@RequestMapping
 public class ItemController {
 
     @Autowired
     private ItemService itemService;
 
-    @GetMapping
+    @GetMapping("/api/items")
     public ResponseEntity<List<Item>> getAllItems() {
         List<Item> items = itemService.getAllItems();
         return ResponseEntity.ok(items);
     }
 
-    @PostMapping
+    @PostMapping("/api/staff/items")
     public ResponseEntity<Item> createItem(@RequestBody Item item) {
         Item savedItem = itemService.saveItem(item);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedItem);

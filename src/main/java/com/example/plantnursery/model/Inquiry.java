@@ -15,6 +15,7 @@ public class Inquiry {
     private String subject;
     private String message;
     private LocalDateTime inquiryDate;
+    private LocalDateTime responseDate;
 
     @Enumerated(EnumType.STRING)
     private InquiryStatus status; // Reference to the InquiryStatus enum
@@ -78,6 +79,13 @@ public class Inquiry {
         this.response = response;
     }
 
+    public LocalDateTime getResponseDate() {
+        return responseDate;
+    }
+
+    public void setResponseDate(LocalDateTime responseDate) {
+        this.responseDate = responseDate;
+    }
     public enum InquiryStatus {
         OPEN,
         IN_PROGRESS,

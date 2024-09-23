@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/inquiries")
+@RequestMapping
 public class InquiryController {
 
     private final InquiryService inquiryService;
@@ -21,21 +21,25 @@ public class InquiryController {
         this.inquiryService = inquiryService;
     }
 
-    @GetMapping
+    @GetMapping("/api/staff/inquiries")
     public ResponseEntity<List<Inquiry>> getAllInquiries() {
         List<Inquiry> inquiries = inquiryService.getAllInquiries();
         return ResponseEntity.ok(inquiries);
     }
 
-    @PostMapping
+    @PostMapping("/api/customers/inquiries")
     public ResponseEntity<Inquiry> createInquiry(@RequestBody InquiryRequest request) {
         Inquiry inquiry = inquiryService.createInquiry(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(inquiry);
     }
 
-    @GetMapping("/{inquiryId}")
-    public ResponseEntity<Inquiry> getInquiryById(@PathVariable Long inquiryId) {
-        Optional<Inquiry> inquiry = inquiryService.getInquiryById(inquiryId);
-        return inquiry.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    @GetMapping("api/customers/inquiries/{customerId}")
+    public ResponseEntity<List<Inquiry>> getInquiriesByCustomerId(@PathVariable Long customerId) {
+        List<Inquiry> inquiries = inquiryService.getInquiriesByCustomerId(customerId);
+        if (inquiries.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(inquiries);
     }
+
 }

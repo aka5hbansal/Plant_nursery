@@ -50,5 +50,12 @@ public class CustomerController {
 
         return ResponseEntity.ok(customer.getAddresses());
     }
+    @GetMapping("/{customerId}")
+    public ResponseEntity<Customer> getCustomerProfile(@PathVariable Long customerId) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
+        return ResponseEntity.ok(customer);
+    }
+
 }
 
